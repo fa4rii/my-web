@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>choronolux- Produk</title>
+  <link rel="stylesheet" href="mystle.css" />
+  <meta name="description" content="Daftar produk jam tangan berkualitas dari Toko Online Kel 4." />
+</head>
+
+<body>
+  <nav>
+    <a href="home.html">Home</a> |
+    <a href="produk.html">Produk</a> |
+    <a href="keranjang.html">Keranjang</a> |
+    <a href="kontak.html">Kontak</a> |
+    <a href="about.html">Tentang Kami</a>
+  </nav>
+
+  <hr />
+
+  <header>
+    <h1>Produk Unggulan</h1>
+    <p>Temukan jam tangan terbaik sesuai gaya dan kebutuhan Anda</p>
+  </header>
+
+  <hr />
+
+  <main>
+    <section class="product-list">
+      <article class="product-item">
+        <img src="gambar jam1.jpg" alt="Jam tangan CASIO" />
+        <h3>CASIO</h3>
+        <p>Jam tangan Casio cocok untuk penggunaan sehari-hari maupun acara formal.</p>
+        <p>Harga: Rp2.176.000</p>
+        <button onclick="tambahKeKeranjang('CASIO', 2176000)">Beli Sekarang</button>
+      </article>
+
+      <article class="product-item">
+        <img src="gambar jam2.jpg" alt="Jam tangan FOSSIL" />
+        <h3>FOSSIL</h3>
+        <p>Teknologi anti luntur dan tahan air hingga 5 ATM.</p>
+        <p>Harga: Rp1.196.000</p>
+        <button onclick="tambahKeKeranjang('FOSSIL', 1196000)">Beli Sekarang</button>
+      </article>
+
+      <article class="product-item">
+        <img src="gambar jam3.jpg" alt="Jam tangan DANIEL WELLINGTON" />
+        <h3>DANIEL WELLINGTON</h3>
+        <p>Tampil eye-catching dan kekinian dengan gaya simpel dan elegan.</p>
+        <p>Harga: Rp2.260.000</p>
+        <button onclick="tambahKeKeranjang('DANIEL WELLINGTON', 2260000)">Beli Sekarang</button>
+      </article>
+       
+     <article class="product-item">
+       <img src="gambar jam4.jpg" alt="Produk 4" />
+       <h3>SEIKO</h3>
+       <p>Seiko cocok bagi yang menginginkan jam tangan mewah namun dengan  budget lebih bersahabat.</p>
+       <p>Harga: Rp3.500.000</p>
+       <button onclick="tambahKeKeranjang('SEIKO', 3500000)">Beli Sekarang</button>
+      </article>
+
+     <article class="product-item">
+       <img src="gambar jam5.jpg" alt="Produk 5" />
+       <h3>CITIZEN</h3>
+       <p>Citizen menawarkan desain yang elegan dan fungsional, cocok untuk berbagai kesempatan.</p>
+       <p>Harga: Rp.7.438.000</p>
+       <button onclick="tambahKeKeranjang('CITIZEN', 743800)">Beli Sekarang</button>
+      </article>
+
+     <article class="product-item">
+       <img src="gambar jam6.jpg" alt="Produk 6" />
+       <h3>ALEXANDRE CHRISTIE</h3>
+       <p>Jam tangan ini cocok untuk pengguna yang menginginkan aksesori modis dengan kualitas baik, meskipun tidak sepopuler merek internasional besar.</p>
+       <p>Harga: Rp1.225.000</p>
+       <button onclick="tambahKeKeranjang('ALEXSANDRE CHRISTIE', 1225000)">Beli Sekarang</button>
+       </article>
+
+     <article class="product-item">
+       <img src="gambar jam7.jpg" alt="Produk 3" />
+       <h3>ROLEX</h3>
+       <p>Jam tangan Rolex dikenal dengan kualitas premium, desain elegan, dan ketahanan yang luar biasa , Rolex sering dianggap sebagai simbol status dan prestise dengan harga yang sangat tinggi.</p>
+       <p>Harga: Rp6.760.000</p>
+       <button onclick="tambahKeKeranjang('ROLEX', 6760000)">Beli Sekarang</button>
+       </article>
+
+    <article class="product-item">
+      <img src="gambar jam8.jpg" alt="Produk 3" />
+      <h3>SWAROVSKI</h3>
+      <p>Jam tangan ini lebih menonjolkan aspek fashion dan kemewahan, cocok untuk wanita yang ingin tampil glamor dan elegan.</p>
+      <p>Harga: Rp4.862.000</p>
+      <button onclick="tambahKeKeranjang('SWAROVSKI', 4862000)">Beli Sekarang</button>
+      </article>
+ 
+    </section>
+  </main>
+
+  <hr />
+
+  <footer>
+    <p>choronoluxe.</p>
+  </footer>
+
+  <!-- JavaScript untuk Menambahkan ke Keranjang -->
+  <script>
+    function tambahKeKeranjang(nama, harga) {
+      let keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
+      keranjang.push({ nama, harga, jumlah: 1 });
+      localStorage.setItem("keranjang", JSON.stringify(keranjang));
+      alert(nama + " telah ditambahkan ke keranjang!");
+    }
+  </script>
+</body>
+
+</html>

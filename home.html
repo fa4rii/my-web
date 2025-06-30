@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Chronoluxe & Co.</title>
+<body>
+  <nav>
+    <a href="home.html">Home</a> |
+    <a href="produk.html">Produk</a> |
+    <a href="keranjang.html">Keranjang</a> |
+    <a href="kontak.html">Kontak</a> |
+    <a href="about.html">Tentang Kami</a>
+  </nav>
+
+    <link rel="stylesheet" href="mystle.css" />
+    <style>
+        /* Basic style untuk slideshow */
+        .slideshow-container {
+            position: relative;
+            max-width: 100%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            position: absolute;
+            width: 100%;
+        }
+
+        .slide img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .active-slide {
+            display: block;
+            position: relative;
+        }
+
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.3s ease;
+            border-radius: 0 3px 3px 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            user-select: none;
+            z-index: 10;
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .dot-container {
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .dot {
+            cursor: pointer;
+            height: 12px;
+            width: 12px;
+            margin: 0 4px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .dot.active {
+            background-color: #717171;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="home-section">
+    <h1>Chronoluxe & Co.</h1>
+    <div class="subtitle">
+        Pilihan jam tangan original, stylish, dan berkualitas!
+    </div>
+
+    <!-- SLIDESHOW -->
+    <div class="slideshow-container">
+        <div class="slide active-slide"><img src="logo.jpg" alt="Jam" /></div>
+        <div class="slide"><img src="logo1.jpg" alt="Jam 1" /></div>
+        <div class="slide"><img src="logo2.jpg" alt="Jam 2" /></div>
+        <div class="slide"><img src="logo3.jpg" alt="Jam 3" /></div>
+        <div class="slide"><img src="logo4.jpg" alt="Jam 4" /></div>
+
+        <button class="prev" onclick="plusSlides(-1)">&#10094;</button>
+        <button class="next" onclick="plusSlides(1)">&#10095;</button>
+    </div>
+
+    <div class="dot-container">
+        <span class="dot active" onclick="currentSlide(0)"></span>
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+    </div>
+
+    <!-- Section lainnya tetap sama (brand, berita, footer) -->
+    <!-- ... (potong untuk singkat) -->
+
+</div>
+
+<!-- JAVASCRIPT SLIDESHOW -->
+<script>
+    let slideIndex = 0;
+    const slides = document.querySelectorAll(".slide");
+    const dots = document.querySelectorAll(".dot");
+
+    function showSlide(n) {
+        slides.forEach((slide, i) => {
+            slide.classList.remove("active-slide");
+            dots[i].classList.remove("active");
+        });
+        slides[n].classList.add("active-slide");
+        dots[n].classList.add("active");
+        slideIndex = n;
+    }
+
+    function plusSlides(n) {
+        slideIndex += n;
+        if (slideIndex >= slides.length) slideIndex = 0;
+        if (slideIndex < 0) slideIndex = slides.length - 1;
+        showSlide(slideIndex);
+    }
+
+    function currentSlide(n) {
+        showSlide(n);
+    }
+
+    // Auto-slide setiap 5 detik (opsional)
+    setInterval(() => {
+        plusSlides(1);
+    }, 5000);
+</script>
+
+</body>
+</html>

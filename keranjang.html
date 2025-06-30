@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Toko Online Kel 4 - Keranjang</title>
+  <link rel="stylesheet" href="mystle.css" />
+  <meta name="description" content="choronoluxe." />
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      color: #333;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      text-align: left;
+    }
+
+    td:nth-child(2), td:nth-child(3), td:nth-child(4) {
+      text-align: right;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #45a049;
+    }
+
+    textarea {
+      width: 100%;
+      height: 80px;
+      margin-top: 10px;
+      padding: 8px;
+      resize: vertical;
+    }
+
+    label {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <a href="home.html">Home</a> |
+    <a href="produk.html">Produk</a> |
+    <a href="keranjang.html">Keranjang</a> |
+    <a href="contact.html">Kontak</a> |
+    <a href="about.html">Tentang Kami</a>
+  </nav>
+
+  <hr />
+
+  <header>
+    <h1>Keranjang Belanja Anda</h1>
+    <p>Review produk yang ingin Anda beli sebelum checkout</p>
+  </header>
+
+  <hr />
+
+  <main>
+    <section id="keranjang-container"></section>
+
+    <div id="checkout-area" style="margin-top: 20px;"></div>
+    <div id="pembayaran-result" style="margin-top: 30px;"></div>
+  </main>
+
+  <hr />
+
+  <footer>
+    <p>chronoluxe.</p>
+  </footer>
+
+  <script>
+    const keranjangContainer = document.getElementById("keranjang-container");
+    const checkoutArea = document.getElementById("checkout-area");
+    const pembayaranResult = document.getElementById("pembayaran-result");
+
+    const dataSample = [
+      { nama: "CASIO", jumlah: 1, harga: 2176000 },
+      { nama: "FOSSIL", jumlah: 2, harga: 1196000 }
+    ];
+
+    if (!localStorage.getItem("keranjang")) {
+      localStorage.setItem("keranjang", JSON.stringify(dataSample));
+    }
+
+    let keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
+
+    function formatRupiah(angka) {
+      return 'Rp' + angka.toLocaleString('id-ID');
+    }
+
+    function tampilkanKeranjang() {
+      if (keranjang.length === 0) {
+        keranjangContainer.innerHTML = "<p>Keranjang Anda kosong.</p>";
+        checkoutArea.innerHTML = "";
+        return;
+      }
+
+      let total = 0;
+      let tabelHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Produk</th>
+              <th>Jumlah</th>
+              <th>Harga</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      keranjang.forEach(item => {
+        const subtotal = item.harga * item.jumlah;
+        total += subtotal;
+        tabelHTML += `
+          <tr>
+            <td>${item.nama}</td>
+            <td style="text-align: center;">${item.jumlah}</td>
+            <td>${formatRupiah(item.harga)}</td>
+            <td>${formatRupiah(subtotal)}</td>
+          </tr>
+        `;
+      });
+
+      tabelHTML += `
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="3" style="text-align: right; font-weight: bold;">Total</td>
+              <td style="font-weight: bold;">${formatRupiah(total)}</td>
+            </tr>
+          </tfoot>
+        </table>
+      `;
+
+      keranjangContainer.innerHTML = tabelHTML;
+
+      checkoutArea.innerHTML = `
+        <div style="margin-top: 20px;">
+          <label for="alamat">Alamat Pengiriman:</label><br>
+          <textarea id="alamat" placeholder="Contoh: Jl. Mawar No. 123, Jakarta, 12345"></textarea>
+
+          <label for="metode">Pilih Metode Pembayaran:</label><br>
+          <select id="metode" style="margin-top: 5px;">
+            <option value="Cash">Cash</option>
+            <option value="Transfer Bank">Transfer Bank</option>
+            <option value="E-Wallet">E-Wallet</option>
+          </select>
+
+          <div style="text-align: right; margin-top: 10px;">
+            <button class="btn" onclick="prosesCheckout(${total})">Checkout & Bayar</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function buatKodePembayaran() {
+      return "INV" + Math.floor(Math.random() * 1000000).toString().padStart(6, "0");
+    }
+
+    function prosesCheckout(total) {
+      const metode = document.getElementById("metode").value;
+      const alamat = document.getElementById("alamat").value.trim();
+
+      if (alamat === "") {
+        alert("Silakan isi alamat pengiriman terlebih dahulu.");
+        return;
+      }
+
+      const kodePembayaran = buatKodePembayaran();
+      const konfirmasi = confirm(
+        `Alamat: ${alamat}\nMetode: ${metode}\nTotal: ${formatRupiah(total)}\n\nLanjutkan ke pembayaran?`
+      );
+
+      if (!konfirmasi) return;
+
+      // Hapus keranjang
+      localStorage.removeItem("keranjang");
+      keranjang = [];
+
+      keranjangContainer.innerHTML = "";
+      checkoutArea.innerHTML = "";
+
+      pembayaranResult.innerHTML = `
+        <h2>Terima kasih atas pembelian Anda!</h2>
+        <p><strong>Metode Pembayaran:</strong> ${metode}</p>
+        <p><strong>Alamat Pengiriman:</strong><br>${alamat}</p>
+        <p><strong>Total Dibayar:</strong> ${formatRupiah(total)}</p>
+        <p><strong>Kode Pembayaran:</strong> <span style="color: green;">${kodePembayaran}</span></p>
+        <p>Silakan simpan kode ini sebagai bukti pembayaran Anda.</p>
+      `;
+    }
+
+    tampilkanKeranjang();
+  </script>
+</body>
+
+</html>
